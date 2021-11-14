@@ -3,7 +3,7 @@ class CenterLine:
     def __init__(self,name,path,setpoint,plc_variable='', maximum : int=None, minimum : int=None) -> None:
         self.name = name
         self.path = path
-        self.setpoint = setpoint
+        self.setpoint = int(setpoint)
         self.plc_variable = plc_variable 
         self.status = False
 
@@ -11,8 +11,8 @@ class CenterLine:
             self.maximum = self.setpoint
             self.minimum = self.setpoint   # Если не задали пределы, то пределы пусть будут равны значению.
         else:
-            self.maximum = maximum
-            self.minimum = minimum
+            self.maximum = int(maximum)
+            self.minimum = int(minimum)
 
         if self.plc_variable:
             self.update_status() 
@@ -63,12 +63,15 @@ class CenterLineList():
                     cl['path'],
                     cl['setpoint'],
                     minimum=cl['min'],
-                    maximum=cl['max']))
+                    maximum=cl['max'])) # Приводить в инт из конфига?
     
     def attach_from_conteiner(self,plcvar_list):
         for index,item in enumerate(self.cl_list):
             for plc_var in plcvar_list:
                 if item.path == plc_var.name:
                     item.set_plc_variable(plc_var)
-        
+                    
+    def update_status(self):
+        for cl in self.cl_list:
+            cl.update_status()
 
