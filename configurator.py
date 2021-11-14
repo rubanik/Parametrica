@@ -1,9 +1,5 @@
 class Configurator:
     
-    centerlines_configuration = []
-    plc_paths = []
-    _headers = ['name','path','setpoint','min','max']
-    
     def __init__(self,path='configuration.cfg'):
         self.raw_config = []
         self.centerlines_configuration = []
@@ -38,3 +34,7 @@ class Configurator:
                     self.plc_paths.append(cl['path'])
         except Exception as e:
             print('Ошибка при извлечении пути переменной')
+
+
+    def get_cl_and_plc_paths(self):
+        return self.centerlines_configuration,self.plc_paths

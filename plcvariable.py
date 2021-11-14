@@ -1,3 +1,5 @@
+import pyads
+
 class PlcVariable:
     """
     This class contains plc.variable information:
@@ -92,3 +94,6 @@ class VariableContainer:
         if self.container:
             for item in self.container:
                 item.update_value()
+
+    def get_plcvariales(self):
+        return self.container
